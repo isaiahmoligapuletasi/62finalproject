@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Outfit Selector Interface
@@ -10,23 +10,13 @@ import java.util.ArrayList;
  */
 public interface OutfitSelector{
     //Managing clothing options 
+
     public void addClothingItem(ClothingItem item);
 
     public boolean removeClothingItem(ClothingItem item);
 
-    //Looking at all clothing items
-    public ArrayList<ClothingItem> getAllClothingItems();
-
-    //Filtering 
-
-    //Top or Bottom
-    public ArrayList<ClothingItem> filterByType(String type);
-
-    //Casual, formal, athletic, etc
-    public ArrayList<ClothingItem> filterByStyle(String style);
-
-    //Hot, Snowy, etc
-    public ArrayList<ClothingItem> filterByWeather(String weather);
+    //Retrieves all clothing items stored in system
+    public List<ClothingItem> getAllClothingItems();
 
     //Generated an outfit based on user input like 
     //"I need something casual for a hot day"
@@ -35,27 +25,23 @@ public interface OutfitSelector{
     //Wear Tracking 
     public void markItemAsWorn(ClothingItem item);
 
-    public void incrementWearCount(ClothingItem item);
-
     public int getWearCount(ClothingItem item);
 
     //Classifying item as clean or dirty 
-    public void itemDirty(ClothingItem item);
+    public void markItemDirty(ClothingItem item);
 
-    public void itemClean(ClothingItem item);
+    public void markItemClean(ClothingItem item);
 
     public boolean isItemDirty(ClothingItem item);
 
     //Check whether two clothing items work well together
     public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2);
-    
+    public boolean isColorCompatible(ClothingItem item1, ClothingItem item2);
 
+    //Convert natural language input into usable keyword for filtering
+    public List<String> parseUserInput(String input);
 
+    //Returns the top B most worn items
+    public List<ClothingItem> getMostWornItems(int topB);
 
-
-
-    
-
-
-    
 }
