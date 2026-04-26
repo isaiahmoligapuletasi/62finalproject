@@ -9,7 +9,7 @@ public class ClothingItem {
     //Labels like "Cotton", "Denim", etc
     private String texture;
 
-    //Labels like "Casual", "Atheletic wear"
+    //Labels like "Casual", "Athletic wear"
     private String style;
 
     public ClothingItem(String name, String category, String color, String texture, String style) {
