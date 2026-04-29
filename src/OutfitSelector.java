@@ -31,7 +31,7 @@ public interface OutfitSelector{
     public void markItemDirty(ClothingItem item);
 
     public void markItemClean(ClothingItem item);
-
+    
     public boolean isItemDirty(ClothingItem item);
 
     //Check whether two clothing items work well together
