@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wardrobe {
+public class Wardrobe implements OutfitSelectorInterface {
 
   //clean tops
   private ArrayList<ClothingItem> tops;
@@ -38,13 +38,13 @@ public class Wardrobe {
 
   //also is already in clothingItem
   public int getWearCount(ClothingItem item) {
-    return item.wearCount();
+    return item.getWearCount(); //I changed this to the get that exists- J
   }
 
   public void markItemAsWorn(ClothingItem item) {
     item.markWorn();
     item.wearCount += 1;
-    if (item.wearCount() >= maxWearsBeforeDirty) {
+    if (item.getWearCount() >= maxWearsBeforeDirty) {
       sendToHamper(item);
     }
   }
@@ -75,7 +75,7 @@ public class Wardrobe {
   private void sendToHamper(ClothingItem item) {
     tops.remove(item);
     bottoms.remove(item);
-    item.markItemDirty();
+    item.markDirty();
     if (!laundryHamper.contains(item)) {
       laundryHamper.add(item);
     }
@@ -120,6 +120,7 @@ public class Wardrobe {
     return result;
   }
 
+  //rewrite
   public List<ClothingItem> getLeastWornTops() {
     ArrayList<ClothingItem> result = new ArrayList<>();
     ArrayList<ClothingItem> remaining = new ArrayList<>(tops);
@@ -157,6 +158,37 @@ public class Wardrobe {
     }
     return result;
   }
+
+    public void addClothingItem(ClothingItem item) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'addClothingItem'");
+    }
+
+    public boolean removeClothingItem(ClothingItem item) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'removeClothingItem'");
+    }
+
+    public List<ClothingItem> getAllClothingItems() {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'getAllClothingItems'");
+    }
+
+    public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'isTextureCompatible'");
+    }
+
+    public boolean isColorCompatible(ClothingItem item1, ClothingItem item2) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'isColorCompatible'");
+    }
+
+    public List<ClothingItem> getMostWornItems(int topB) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'getMostWornItems'");
+    }
+}
   
   
       
