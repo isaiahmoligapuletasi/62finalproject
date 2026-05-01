@@ -127,11 +127,25 @@ public class Wardrobe implements OutfitSelectorInterface {
   //compatability checks
   
   public boolean isTextureCompatibile(ClothingItem item1, ClothingItem item2) {
-    return true;
+    if (item1.getTexture().toLowerCase().equals(item2.getTexture().toLowerCase()) {
+     // do we want clothing items to be the same texture?
+      // next meeting, we should come up with all the cases for compatibility
+      return true;
+    } else {
+      return false;
+    }
   }
+    
   
   public boolean isColorCompatible(ClothingItem item1, ClothingItem item2) {
-    return true;
+    if (item1.getColor().toLowerCase().equals(item2.getColor().toLowerCase()) {
+      // if colors are the same, thats a match (monochrome look)
+      return true;
+    } else {
+      // if they are different colors, we have to decide if they are okay
+      // for right now, we'll just say colors don't match unless they are the same
+      return false;
+    }
   }
 
 //------------------------------------------------------------------------------------
