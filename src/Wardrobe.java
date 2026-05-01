@@ -10,7 +10,8 @@ public class Wardrobe implements OutfitSelectorInterface {
 
   private ArrayList<ClothingItem> laundryHamper;
 
-  private static final int maxWearsBeforeDirty = 3;
+  // We are no longer doing automatic removal (recommendation from Prof Li) - Joselyn
+  //private static final int maxWearsBeforeDirty = 3;
 
   //empty wardrobe - might not need these but we'll see after we build the parser
   //we could have the parser class automatically load this wardrobe 
@@ -18,7 +19,6 @@ public class Wardrobe implements OutfitSelectorInterface {
     tops = new ArrayList<>();
     bottoms = new ArrayList<>();
     laundryHamper = new ArrayList<>();
-
   }
 
   //i know we have this in clothingItem but i haven't extended any classes
@@ -36,21 +36,22 @@ public class Wardrobe implements OutfitSelectorInterface {
     return new ArrayList<>(laundryHamper);
   }
 
+
   //also is already in clothingItem
   public int getWearCount(ClothingItem item) {
     return item.getWearCount(); //I changed this to the get that exists- J
   }
 
   public void markItemAsWorn(ClothingItem item) {
-    item.markWorn();
-    item.wearCount += 1;
-    if (item.getWearCount() >= maxWearsBeforeDirty) {
-      sendToHamper(item);
+    if (item.isDirty()) {
+      throw new IllegalStateException("Item is dirty!");
     }
+    item.markWorn();
+   // if (item.getWearCount() >= maxWearsBeforeDirty) {
+    //  sendToHamper(item);
   }
 
   public void markItemDirty(ClothingItem item) {
-    item.isDirty = true;
     sendToHamper(item);
   }
 
@@ -75,6 +76,7 @@ public class Wardrobe implements OutfitSelectorInterface {
   private void sendToHamper(ClothingItem item) {
     tops.remove(item);
     bottoms.remove(item);
+
     item.markDirty();
     if (!laundryHamper.contains(item)) {
       laundryHamper.add(item);
@@ -160,13 +162,26 @@ public class Wardrobe implements OutfitSelectorInterface {
   }
 
     public void addClothingItem(ClothingItem item) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'addClothingItem'");
+      if (item.isDirty()) {
+        laundryHamper.add(item);
+      } else if (item.getCategory().equalsIgnoreCase("Tops")) {
+         tops.add(item);
+      } else if (item.getCategory().equalsIgnoreCase("Bottoms")) {
+          bottoms.add(item);
+      } else {
+        throw new IllegalArgumentException("Unknown item: " + item.getCategory());
+      }
     }
 
+    /**
+     * Attempts to remove the given ClothingItem from the wardrobe.
+     * The item may exists within tops, bottom, or laundry hamper. 
+     * 
+     * @param item the ClothingItem we want removed
+     * @return true if item was found and removed from at least one list, otherwise false
+     */
     public boolean removeClothingItem(ClothingItem item) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'removeClothingItem'");
+      return tops.remove(item) || bottoms.remove(item) || laundryHamper.remove(item);
     }
 
     public List<ClothingItem> getAllClothingItems() {
