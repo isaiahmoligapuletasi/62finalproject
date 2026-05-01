@@ -15,11 +15,7 @@ public class Wardrobe implements OutfitSelectorInterface {
   //dirty clothes
   private ArrayList<ClothingItem> laundryHamper;
 
-  // We are no longer doing automatic removal (recommendation from Prof Li) - Joselyn
-  //private static final int maxWearsBeforeDirty = 3;
-
-  //empty wardrobe - might not need these but we'll see after we build the parser
-  //we could have the parser class automatically load this wardrobe 
+  
   public Wardrobe() {
     this.tops = new ArrayList<>();
     this.bottoms = new ArrayList<>();
