@@ -63,7 +63,7 @@ public class Wardrobe implements OutfitSelectorInterface {
         bottoms.add(item);
       } else if (category.equals("jacket") {
         jackets.add(item);
-      } else if (category.equals("dress) {
+      } else if (category.equals("dress") {
         dresses.add(item);
       }
     }
