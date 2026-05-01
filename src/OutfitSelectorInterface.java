@@ -34,7 +34,4 @@ public interface OutfitSelectorInterface{
     public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2);
     public boolean isColorCompatible(ClothingItem item1, ClothingItem item2);
 
-    //Returns the top B most worn items
-    public List<ClothingItem> getMostWornItems(int topB);
-
 }

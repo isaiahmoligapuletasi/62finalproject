@@ -36,6 +36,15 @@ public class Wardrobe implements OutfitSelectorInterface {
     return new ArrayList<>(laundryHamper);
   }
 
+  public List<ClothingItem> getAllClothingItems() {
+    ArrayList<ClothingItem> allItems = new ArrayList<>();
+    allItems.addAll(tops);
+    allItems.addAll(bottoms);
+    allItems.addAll(laundryHamper);
+
+    return allItems;
+  }
+
 
   //also is already in clothingItem
   public int getWearCount(ClothingItem item) {
@@ -184,11 +193,6 @@ public class Wardrobe implements OutfitSelectorInterface {
       return tops.remove(item) || bottoms.remove(item) || laundryHamper.remove(item);
     }
 
-    public List<ClothingItem> getAllClothingItems() {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getAllClothingItems'");
-    }
-
     public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2) {
       // TODO Auto-generated method stub
       throw new UnsupportedOperationException("Unimplemented method 'isTextureCompatible'");
@@ -197,11 +201,6 @@ public class Wardrobe implements OutfitSelectorInterface {
     public boolean isColorCompatible(ClothingItem item1, ClothingItem item2) {
       // TODO Auto-generated method stub
       throw new UnsupportedOperationException("Unimplemented method 'isColorCompatible'");
-    }
-
-    public List<ClothingItem> getMostWornItems(int topB) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'getMostWornItems'");
     }
 }
   
