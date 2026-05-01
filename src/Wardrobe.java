@@ -7,10 +7,12 @@ public class Wardrobe implements OutfitSelectorInterface {
   private ArrayList<ClothingItem> tops;
   //clean bottoms
   private ArrayList<ClothingItem> bottoms;
-
-  //Some of our items are labeled as jackets in the data so should we have that seperately?
- // private ArrayList<ClothingItem> jackets;
-
+  //clean jackets
+  private ArrayList<ClothingItem> jackets;
+  //clean dresses
+  private ArrayList<ClothingItem> dresses;
+  
+  //dirty clothes
   private ArrayList<ClothingItem> laundryHamper;
 
   // We are no longer doing automatic removal (recommendation from Prof Li) - Joselyn
@@ -19,82 +21,92 @@ public class Wardrobe implements OutfitSelectorInterface {
   //empty wardrobe - might not need these but we'll see after we build the parser
   //we could have the parser class automatically load this wardrobe 
   public Wardrobe() {
-    tops = new ArrayList<>();
-    bottoms = new ArrayList<>();
-    // jackets = new ArrayList<>();
-    laundryHamper = new ArrayList<>();
+    this.tops = new ArrayList<>();
+    this.bottoms = new ArrayList<>();
+    this.jackets - new ArrayList<>();
+    this.dresses = new ArrayList<>();
+    this.laundryHamper = new ArrayList<>();
   }
 
-  //i know we have this in clothingItem but i haven't extended any classes
-  //but we should discuss exactly where each method is going before building more
+//------------------------------------------------------------------------------------
+  // getters
+  
   public List<ClothingItem> getTops() {
     return new ArrayList<>(tops);
   }
-
+  
   public List<ClothingItem> getBottoms() {
     return new ArrayList<>(bottoms);
   }
-
-  //public List<ClothingItem> getJackets() {
-  //  return new ArrayList<>(jackets);
- // }
-
-  //all items in laundry hamper
+  
+  public List<ClothingItem> getJackets() {
+    return new ArrayList<>(jackets);
+  }
+  
+  public List<ClothingItem> getDresses() {
+    return new ArrayList<>(dresses);
+  }
+  
   public List<ClothingItem> getLaundryHamper() {
     return new ArrayList<>(laundryHamper);
   }
 
+//------------------------------------------------------------------------------------
+  //ClothingSelecterInterface methods
+
+  // adds item to correct list based on category
+  public void addClothingItem(ClothingItem item) {
+    if (item.isDirty()) {
+      laundryHamper.add(item);
+    } else {
+      String category = item.getCategory().toLowerCase();
+
+      if (category.equals("top") {
+        tops.add(item);
+      } else if (category.equals("bottom") {
+        bottoms.add(item);
+      } else if (category.equals("jacket") {
+        jackets.add(item);
+      } else if (category.equals("dress) {
+        dresses.add(item);
+      }
+    }
+  }
+
+  // removes item from respective list
+  public boolean removeClothingItem(ClothingItem item) {
+    return tops.remove(item) || bottoms.remove(item) || jackets.remove(item) || dresses.remove(item) || laundryHamper.remove(item);
+  }
+
   public List<ClothingItem> getAllClothingItems() {
-    ArrayList<ClothingItem> allItems = new ArrayList<>();
-    allItems.addAll(tops);
-    allItems.addAll(bottoms);
-    //allItems.addAll(jackets);
-    allItems.addAll(laundryHamper);
-
-    return allItems;
+    ArrayList<ClothingItem> all = new ArrayList<>();
+    all.addAll(tops);
+    all.addAll(bottoms);
+    all.addAll(jackets);
+    all.addAll(dresses);
+    all.addAll(laundryHamper);
+    return all;
   }
-
-
-  //also is already in clothingItem
-  public int getWearCount(ClothingItem item) {
-    return item.getWearCount(); //I changed this to the get that exists- J
-  }
-
+  
+  // mark item as worn (by incrementing wearCount)
   public void markItemAsWorn(ClothingItem item) {
     if (item.isDirty()) {
-      throw new IllegalStateException("Item is dirty!");
+      System.out.println("Cannot wear this! It's in the laundry hamper :(");
+    } else {
+      item.markWorn();
     }
-    item.markWorn();
-   // if (item.getWearCount() >= maxWearsBeforeDirty) {
-    //  sendToHamper(item);
+  }
+  
+  public int getWearCount(ClothingItem item) {
+    return item.getWearCount();
   }
 
+  // removes item from wardrobe and to laundry hamper
   public void markItemDirty(ClothingItem item) {
-    sendToHamper(item);
-  }
-
-  //haven't made markClean yet -> will implement after we set which methods are in each class
-  public void markItemClean(ClothingItem item) {
-    laundryHamper.remove(item);
-    item.markClean();
-    item.resetWearCount();
-    //we need to decide if we are automatically using upper or lowercase
-    if (item.getCategory().equals("Top")) {
-      tops.add(item);
-    } else if (item.getCategory().equals("Bottom")) {
-      bottoms.add(item);
-    } 
-  }
-
-  //same note: already in clothingItem
-  public boolean isItemDirty(ClothingItem item) {
-    return item.isDirty();
-  }
-
-  private void sendToHamper(ClothingItem item) {
     tops.remove(item);
     bottoms.remove(item);
-    //jackets.remove(item);
+    jackets.remove(item);
+    dresses.remove(item);
 
     item.markDirty();
     if (!laundryHamper.contains(item)) {
@@ -102,117 +114,154 @@ public class Wardrobe implements OutfitSelectorInterface {
     }
   }
 
-  public List<ClothingItem> getMostWornTops() {
-    ArrayList<ClothingItem> result = new ArrayList<>();
-    ArrayList<ClothingItem> remaining = new ArrayList<>(tops);
-
-    //we haven't discussed how many items we want to return for mostWorn (i just did 3)
-    //right now this is traversing all tops for the top 3 mostWorn - do we want to make and use a separate ArrayList?
-    for (int i=0; i<3 && !remaining.isEmpty(); i++) {
-      ClothingItem mostWorn = remaining.get(0);
-      for (ClothingItem item : remaining) {
-        if (item.getWearCount() > mostWorn.getWearCount()) {
-          mostWorn = item;
-        }
-      }
-      result.add(mostWorn);
-      remaining.remove(mostWorn);
+  // removes an item from the laundry hamper to the wardrobe
+  public void markItemClean(ClothingItem item) {
+    if (laundryHamper.remove(item)) {
+      item.markClean();
+      item.resetWearCount();
+      addClothingItem(item);
     }
-    return result;
+  }
+  
+  public boolean isItemDirty(ClothingItem item) {
+    return item.isDirty();
   }
 
-
-  public List<ClothingItem> getMostWornBottoms() {
-    ArrayList<ClothingItem> result = new ArrayList<>();
-    ArrayList<ClothingItem> remaining = new ArrayList<>(bottoms);
-
-    //we haven't discussed how many items we want to return for mostWorn (i just did 3)
-    //right now this is traversing all tops for the top 3 mostWorn - do we want to make and use a separate ArrayList?
-    for (int i=0; i<3 && !remaining.isEmpty(); i++) {
-      ClothingItem mostWorn = remaining.get(0);
-      for (ClothingItem item : remaining) {
-        if (item.getWearCount() > mostWorn.getWearCount()) {
-          mostWorn = item;
-        }
-      }
-      result.add(mostWorn);
-      remaining.remove(mostWorn);
-    }
-    return result;
+//------------------------------------------------------------------------------------
+  //compatability checks
+  
+  public boolean isTextureCompatibile(ClothingItem item1, ClothingItem item2) {
+    return true;
+  }
+  
+  public boolean isColorCompatible(ClothingItem item1, ClothingItem item2) {
+    return true;
   }
 
-  //rewrite
-  public List<ClothingItem> getLeastWornTops() {
-    ArrayList<ClothingItem> result = new ArrayList<>();
-    ArrayList<ClothingItem> remaining = new ArrayList<>(tops);
+//------------------------------------------------------------------------------------
+  //implemented getMostWord and getLeastWorn for each clothing category
 
-    //we haven't discussed how many items we want to return for mostWorn (i just did 3)
-    //right now this is traversing all tops for the top 3 mostWorn - do we want to make and use a separate ArrayList?
-    for (int i=0; i<3 && !remaining.isEmpty(); i++) {
-      ClothingItem leastWorn = remaining.get(0);
-      for (ClothingItem item : remaining) {
-        if (item.getWearCount() < leastWorn.getWearCount()) {
-          leastWorn = item;
-        }
-      }
-      result.add(leastWorn);
-      remaining.remove(leastWorn);
+  // finds most worn top (we can edit this to find multiple most worn items)
+  public ClothingItem getMostWornTop() {
+    if (tops.isEmpty()) {
+      return null;
     }
-    return result;
+
+    ClothingItem mostWorn = tops.get(0);
+    for (ClothingItem item : tops) {
+      if (item.getWearCount() > mostWorn.getWearCount()) {
+        mostWorn = item;
+      }
+    }
+    return mostWorn;
   }
 
-    public List<ClothingItem> getLeastWornBottoms() {
-    ArrayList<ClothingItem> result = new ArrayList<>();
-    ArrayList<ClothingItem> remaining = new ArrayList<>(bottoms);
-
-    //we haven't discussed how many items we want to return for mostWorn (i just did 3)
-    //right now this is traversing all tops for the top 3 mostWorn - do we want to make and use a separate ArrayList?
-    for (int i=0; i<3 && !remaining.isEmpty(); i++) {
-      ClothingItem leastWorn = remaining.get(0);
-      for (ClothingItem item : remaining) {
-        if (item.getWearCount() < leastWorn.getWearCount()) {
-          leastWorn = item;
-        }
-      }
-      result.add(leastWorn);
-      remaining.remove(leastWorn);
+  // finds least worn top (we can also edit this one to fine multiple)
+  public ClothingItem getLeastWornTop() {
+    if (tops.isEmpty()) {
+      return null;
     }
-    return result;
+
+    ClothingItem leastWorn = tops.get(0);
+    for (ClothingItem item : tops) {
+      if (item.getWearCount() < leastWorn.getWearCount()) {
+        leastWorn = item;
+      }
+    }
+    return leastWorn;
   }
 
-    public void addClothingItem(ClothingItem item) {
-      if (item.isDirty()) {
-        laundryHamper.add(item);
-      } else if (item.getCategory().equalsIgnoreCase("Tops")) {
-         tops.add(item);
-      } else if (item.getCategory().equalsIgnoreCase("Bottoms")) {
-          bottoms.add(item);
-      } else {
-        throw new IllegalArgumentException("Unknown item: " + item.getCategory());
+  public ClothingItem getMostWornBottom() {
+    if (bottoms.isEmpty()) {
+      return null;
+    }
+
+    ClothingItem mostWorn = bottoms.get(0);
+    for (ClothingItem item : bottoms) {
+      if (item.getWearCount() > mostWorn.getWearCount()) {
+        mostWorn = item;
       }
     }
+    return mostWorn;
+  }
 
-    /**
-     * Attempts to remove the given ClothingItem from the wardrobe.
-     * The item may exists within tops, bottom, or laundry hamper. 
-     * 
-     * @param item the ClothingItem we want removed
-     * @return true if item was found and removed from at least one list, otherwise false
-     */
-    public boolean removeClothingItem(ClothingItem item) {
-      return tops.remove(item) || bottoms.remove(item) || laundryHamper.remove(item);
+  // finds least worn top (we can also edit this one to fine multiple)
+  public ClothingItem getLeastWornBottom() {
+    if (bottoms.isEmpty()) {
+      return null;
     }
 
-    public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'isTextureCompatible'");
+    ClothingItem leastWorn = bottoms.get(0);
+    for (ClothingItem item : bottoms) {
+      if (item.getWearCount() < leastWorn.getWearCount()) {
+        leastWorn = item;
+      }
+    }
+    return leastWorn;
+  }
+
+  public ClothingItem getMostWornJacket() {
+    if (jackets.isEmpty()) {
+      return null;
     }
 
-    public boolean isColorCompatible(ClothingItem item1, ClothingItem item2) {
-      // TODO Auto-generated method stub
-      throw new UnsupportedOperationException("Unimplemented method 'isColorCompatible'");
+    ClothingItem mostWorn = jackets.get(0);
+    for (ClothingItem item : jackets) {
+      if (item.getWearCount() > mostWorn.getWearCount()) {
+        mostWorn = item;
+      }
     }
-}
+    return mostWorn;
+  }
+
+  // finds least worn top (we can also edit this one to fine multiple)
+  public ClothingItem getLeastWornJacket() {
+    if (jackets.isEmpty()) {
+      return null;
+    }
+
+    ClothingItem leastWorn = jackets.get(0);
+    for (ClothingItem item : jackets) {
+      if (item.getWearCount() < leastWorn.getWearCount()) {
+        leastWorn = item;
+      }
+    }
+    return leastWorn;
+  }
+
+  public ClothingItem getMostWornDress() {
+    if (dresses.isEmpty()) {
+      return null;
+    }
+
+    ClothingItem mostWorn = dresses.get(0);
+    for (ClothingItem item : dresses) {
+      if (item.getWearCount() > mostWorn.getWearCount()) {
+        mostWorn = item;
+      }
+    }
+    return mostWorn;
+  }
+
+  // finds least worn top (we can also edit this one to fine multiple)
+  public ClothingItem getLeastWornDress() {
+    if (dresses.isEmpty()) {
+      return null;
+    }
+
+    ClothingItem leastWorn = dresses.get(0);
+    for (ClothingItem item : dresses) {
+      if (item.getWearCount() < leastWorn.getWearCount()) {
+        leastWorn = item;
+      }
+    }
+    return leastWorn;
+  }
+ 
+
+ 
+
+
   
   
       
