@@ -8,6 +8,9 @@ public class Wardrobe implements OutfitSelectorInterface {
   //clean bottoms
   private ArrayList<ClothingItem> bottoms;
 
+  //Some of our items are labeled as jackets in the data so should we have that seperately?
+ // private ArrayList<ClothingItem> jackets;
+
   private ArrayList<ClothingItem> laundryHamper;
 
   // We are no longer doing automatic removal (recommendation from Prof Li) - Joselyn
@@ -18,6 +21,7 @@ public class Wardrobe implements OutfitSelectorInterface {
   public Wardrobe() {
     tops = new ArrayList<>();
     bottoms = new ArrayList<>();
+    // jackets = new ArrayList<>();
     laundryHamper = new ArrayList<>();
   }
 
@@ -31,6 +35,10 @@ public class Wardrobe implements OutfitSelectorInterface {
     return new ArrayList<>(bottoms);
   }
 
+  //public List<ClothingItem> getJackets() {
+  //  return new ArrayList<>(jackets);
+ // }
+
   //all items in laundry hamper
   public List<ClothingItem> getLaundryHamper() {
     return new ArrayList<>(laundryHamper);
@@ -40,6 +48,7 @@ public class Wardrobe implements OutfitSelectorInterface {
     ArrayList<ClothingItem> allItems = new ArrayList<>();
     allItems.addAll(tops);
     allItems.addAll(bottoms);
+    //allItems.addAll(jackets);
     allItems.addAll(laundryHamper);
 
     return allItems;
@@ -74,7 +83,7 @@ public class Wardrobe implements OutfitSelectorInterface {
       tops.add(item);
     } else if (item.getCategory().equals("Bottom")) {
       bottoms.add(item);
-    }
+    } 
   }
 
   //same note: already in clothingItem
@@ -85,6 +94,7 @@ public class Wardrobe implements OutfitSelectorInterface {
   private void sendToHamper(ClothingItem item) {
     tops.remove(item);
     bottoms.remove(item);
+    //jackets.remove(item);
 
     item.markDirty();
     if (!laundryHamper.contains(item)) {
