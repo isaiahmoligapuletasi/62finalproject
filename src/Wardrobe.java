@@ -19,7 +19,7 @@ public class Wardrobe implements OutfitSelectorInterface {
   public Wardrobe() {
     this.tops = new ArrayList<>();
     this.bottoms = new ArrayList<>();
-    this.jackets - new ArrayList<>();
+    this.jackets = new ArrayList<>();
     this.dresses = new ArrayList<>();
     this.laundryHamper = new ArrayList<>();
   }
@@ -57,13 +57,13 @@ public class Wardrobe implements OutfitSelectorInterface {
     } else {
       String category = item.getCategory().toLowerCase();
 
-      if (category.equals("top") {
+      if (category.equals("top")) {
         tops.add(item);
-      } else if (category.equals("bottom") {
+      } else if (category.equals("bottom")) {
         bottoms.add(item);
-      } else if (category.equals("jacket") {
+      } else if (category.equals("jacket")) {
         jackets.add(item);
-      } else if (category.equals("dress") {
+      } else if (category.equals("dress")) {
         dresses.add(item);
       }
     }
@@ -126,8 +126,8 @@ public class Wardrobe implements OutfitSelectorInterface {
 //------------------------------------------------------------------------------------
   //compatability checks
   
-  public boolean isTextureCompatibile(ClothingItem item1, ClothingItem item2) {
-    if (item1.getTexture().toLowerCase().equals(item2.getTexture().toLowerCase()) {
+  public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2) {
+    if (item1.getTexture().toLowerCase().equals(item2.getTexture().toLowerCase())) {
      // do we want clothing items to be the same texture?
       // next meeting, we should come up with all the cases for compatibility
       return true;
