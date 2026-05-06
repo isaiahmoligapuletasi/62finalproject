@@ -6,6 +6,9 @@ import java.util.Comparator;
 public class UserInput {
     // helper class for ranking
     static class OutfitOption {
+        // holds two items together (top & bottoms/dress & jacket)
+        // so we can give each pair a single score when looping
+        // through outfit combinations
         ClothingItem item1;
         ClothingItem item2;
         int score;
@@ -18,7 +21,7 @@ public class UserInput {
     }
 
     public static void main(String[] args) {
-        // loading data
+        // loading data into the Wardrobe
         String path = "data/Testing_DataSet.csv";
         Wardrobe myCloset = DataParser2.loadWardrobe(path);
         Scanner reader = new Scanner(System.in);
@@ -28,10 +31,12 @@ public class UserInput {
         // check all items loaded correctly
         System.out.println("Loaded " + myCloset.getAllClothingItems().size() + " items from the dataset.");
 
+        // the main loop the keeps the program running until user exits
         while (running) {
             // Display menu options
             System.out.println("\n\n==========================================");
-            System.out.println("            MAIN MENU");
+            // TODO: cutomize to user's name
+            System.out.println("            WARDROBE");
             System.out.println("==========================================");
             System.out.println("1. Generate Outfit Suggestions (Top 3)");
             System.out.println("2. View Laundry Hamper");
@@ -43,6 +48,7 @@ public class UserInput {
 
             String choice = reader.nextLine();
 
+            // connecting the user's choice to the correct helper method
             if (choice.equals("1")) {
                 completeOutfitGeneration(myCloset, reader);
             } else if (choice.equals("2")) {
@@ -64,9 +70,9 @@ public class UserInput {
     }
 
     private static void completeOutfitGeneration(Wardrobe w, Scanner reader) {
-        // get preferences
         System.out.println("\n===== OUTIFIT PREFERENCES=====");
 
+        // gathering the users preferences (type, style, and color)
         System.out.println("\nWhat type of outfit would you like?");
         System.out.print("  [A] Tops/Bottoms\n  [B] Jackets/Dresses\nEnter: ");
         String typePreference = reader.nextLine().toLowerCase();
@@ -90,13 +96,15 @@ public class UserInput {
             System.out.print("Enter style: ");
             stylePreference = reader.nextLine().toLowerCase();
         }
-        // do we want to print a list of all the colors/patterns we have (there are 72
-        // unique ones)
+
         System.out.println("\nIs there a specific color you want to wear?");
         System.out.print("(or type 'any'): ");
         String colorPreference = reader.nextLine().toLowerCase();
 
-        // lists to store top 3 matches
+        // we only want to use the relevant lists based on
+        // the users input (ex. if we choose tops/bottoms
+        // list1 becomes a copy of the tops array in Wardrobe
+        // and list2 becomes a copy of the bottoms array in Wardrobe)
         ArrayList<ClothingItem> list1;
         ArrayList<ClothingItem> list2;
 
@@ -108,14 +116,18 @@ public class UserInput {
             list2 = w.getDresses();
         }
 
-        // loop through all items and score them
+        // looping through every possible combination of the two
+        // lists (ex. all combinations of tops and bottoms) to create
+        // outfit objects (OutfitOption)
         ArrayList<OutfitOption> allPossibilities = new ArrayList<>();
 
         for (ClothingItem i1 : list1) {
             for (ClothingItem i2 : list2) {
                 int score = 0;
 
-                // checking for style match
+                // if each item in the outfit matches the user style
+                // preference, we award the outfit 10 points per match
+                // (max 20)
                 if (i1.getStyle().toLowerCase().equals(stylePreference)) {
                     score += 10;
                 }
@@ -124,7 +136,9 @@ public class UserInput {
                     score += 10;
                 }
 
-                // checking for compatability
+                // if both items in the outfit are compatibile by color
+                // and texture, the outfit is awarded 5 points per match
+                // (max 10)
                 if (w.isColorCompatible(i1, i2)) {
                     score += 5;
                 }
@@ -132,7 +146,11 @@ public class UserInput {
                     score += 5;
                 }
 
-                // checking for color match
+                // if both items in the outfit matches the user color
+                // preference, we award the outfit 3 points per match
+                // (max 6 points)
+                // IMPORTANT TO NOTE: if the user selects any, this entire
+                // section is skipped
                 if (!colorPreference.equals("any")) {
                     if (i1.getColor().toLowerCase().contains(colorPreference)) {
                         score += 3;
@@ -142,14 +160,24 @@ public class UserInput {
                     }
                 }
 
+                // adding each outfit object (top, bottom, and outfit score)
+                // to the master list of all outfit combinations
                 allPossibilities.add(new OutfitOption(i1, i2, score));
             }
 
         }
 
+        // we sort the list of all outfit objects/possibilites from highest
+        // to lowest based on score
         Collections.sort(allPossibilities, new Comparator<OutfitOption>() {
             @Override
             public int compare(OutfitOption o1, OutfitOption o2) {
+                // this is just typical comparator behavior (the subtraction
+                // i mentioned in class) - if the algorithm sees a negative
+                // result, it will know that outfit 1's score is smaller and
+                // will place outfit 1 after outfit 2 in the sorted
+                // array (opposite if the result is positive, and leaves
+                // items in their order if result is 0/the scores are equal)
                 return o2.score - o1.score;
             }
         });
@@ -158,6 +186,7 @@ public class UserInput {
             System.out.println("No items found to generate suggestions.");
         } else {
             System.out.println("\n--- TOP 3 RANKED SUGGESTIONS ---");
+            // if are less than 3 options, justs shows how many actually exist
             int count = Math.min(3, allPossibilities.size());
             for (int i = 0; i < count; i++) {
                 OutfitOption opt = allPossibilities.get(i);
@@ -180,6 +209,7 @@ public class UserInput {
         }
     }
 
+    // shows the item in the laundry hamper
     public static void displayHamper(Wardrobe w) {
         System.out.println("\n--- LAUNDRY HAMPER ---");
         ArrayList<ClothingItem> hamper = w.getLaundryHamper();
@@ -192,6 +222,7 @@ public class UserInput {
         }
     }
 
+    // searches all items for a name match and moves it to the laundry hamper
     private static void completeMarkDirty(Wardrobe w, Scanner reader) {
         System.out.print("Enter the name of the item that is dirty: ");
         String nameInput = reader.nextLine().toLowerCase();
@@ -214,6 +245,8 @@ public class UserInput {
         }
     }
 
+    // finds an item in the laundry hamper and moves it back to its respective
+    // category list
     private static void completeItemWash(Wardrobe w, Scanner reader) {
         System.out.print("Enter the name of the item you washed: ");
         String nameInput = reader.nextLine().toLowerCase();
@@ -234,6 +267,7 @@ public class UserInput {
         }
     }
 
+    // displays most/least worn stats
     private static void displayStats(Wardrobe w) {
         System.out.println("\n--- MOST/LEAST WORN STATISTICS ---");
 
