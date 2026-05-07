@@ -63,15 +63,15 @@ public class Wardrobe implements OutfitSelectorInterface {
           || name.contains("top")) {
         tops.add(item);
       } else if (type.contains("bottoms") || name.contains("shorts") || name.contains("pants")
-          || name.contains("leggings") || name.contains("skirt") || name.contains("jeans")) {
+          || name.contains("leggings") || name.contains("skirt") || name.contains("jeans")
+          || name.contains("overalls")) {
         bottoms.add(item);
       } else if (type.contains("jackets") || name.contains("puffer") || name.contains("vest") || name.contains("coat")
           || name.contains("hoodie")) {
         jackets.add(item);
         // are overalls pants or a dress? - we would want a shirt so i assume pants but
         // ive left it here for now
-      } else if (type.contains("dress") || name.contains("jumpsuit") || name.contains("overalls")
-          || name.contains("robe")) {
+      } else if (type.contains("dress") || name.contains("jumpsuit") || name.contains("robe")) {
         dresses.add(item);
       }
     }
