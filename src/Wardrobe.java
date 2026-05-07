@@ -316,6 +316,7 @@ public class Wardrobe implements OutfitSelectorInterface {
     }
     return result;
   }
+}
   
   
       
