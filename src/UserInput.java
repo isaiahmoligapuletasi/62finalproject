@@ -11,11 +11,15 @@ public class UserInput {
         // through outfit combinations
         ClothingItem item1;
         ClothingItem item2;
+
+        //optional jacket
+        ClothingItem jacket; 
         int score;
 
-        OutfitOption(ClothingItem i1, ClothingItem i2, int s) {
+        OutfitOption(ClothingItem i1, ClothingItem i2, ClothingItem jacket, int s) {
             this.item1 = i1;
             this.item2 = i2;
+            this.jacket = jacket;
             this.score = s;
         }
     }
@@ -76,6 +80,7 @@ public class UserInput {
         System.out.println("\nWhat type of outfit would you like?");
         System.out.print("  [A] Tops/Bottoms\n  [B] Jackets/Dresses\nEnter: ");
         String typePreference = reader.nextLine().toLowerCase();
+
         while (!typePreference.equals("a") && !typePreference.equals("b")) {
             System.out.println("Error: Please enter 'A' or 'B': ");
             typePreference = reader.nextLine().toLowerCase();
@@ -88,10 +93,13 @@ public class UserInput {
         System.out.println("  - Loungewear");
         System.out.println("  - Outerwear");
         System.out.print("Enter style: ");
+
         String stylePreference = reader.nextLine().toLowerCase();
+
         while (!stylePreference.equals("casual") && !stylePreference.equals("formal") &&
                 !stylePreference.equals("athletic") && !stylePreference.equals("loungewear") &&
                 !stylePreference.equals("outerwear")) {
+
             System.out.println("\nError: Please choose a valid style from the list above");
             System.out.print("Enter style: ");
             stylePreference = reader.nextLine().toLowerCase();
@@ -101,6 +109,8 @@ public class UserInput {
         System.out.print("(or type 'any'): ");
         String colorPreference = reader.nextLine().toLowerCase();
 
+        boolean wantJacket = false;
+
         // we only want to use the relevant lists based on
         // the users input (ex. if we choose tops/bottoms
         // list1 becomes a copy of the tops array in Wardrobe
@@ -108,10 +118,22 @@ public class UserInput {
         ArrayList<ClothingItem> list1;
         ArrayList<ClothingItem> list2;
 
+        // Type + Bottom 
         if (typePreference.equals("a")) {
             list1 = w.getTops();
             list2 = w.getBottoms();
+
+            System.out.println("\nWould you like a jacket? ");
+            String jacketPreference = reader.nextLine().toLowerCase();
+
+            while(!jacketPreference.equals("yes") && !jacketPreference.equals("no")) {
+                System.out.println("Please enter yes or no: ");
+                jacketPreference = reader.nextLine().toLowerCase();
+            }
+
+            wantJacket = jacketPreference.equals("yes");
         } else {
+            //Dress + Jacket
             list1 = w.getJackets();
             list2 = w.getDresses();
         }
@@ -160,11 +182,57 @@ public class UserInput {
                     }
                 }
 
-                // adding each outfit object (top, bottom, and outfit score)
-                // to the master list of all outfit combinations
-                allPossibilities.add(new OutfitOption(i1, i2, score));
-            }
+                //Optional Jacket, start with no jacket selected
+                ClothingItem extraJacket = null;
 
+                //If the user says they want a jacket then run
+                if (typePreference.equals("a") && wantJacket) {
+                    int bestJacketScore = Integer.MIN_VALUE;
+
+
+                    for (ClothingItem jacket : w.getJackets()) {
+                        int jacketScore = 0;
+
+                        //style
+                        if (jacket.getStyle().toLowerCase().equals(stylePreference)) {
+                            jacketScore += 10;
+                        }
+
+                        if (w.isColorCompatible(jacket, i1)) {
+                            jacketScore += 5;
+                        }
+                        if (w.isTextureCompatible(jacket, i1)) {
+                            jacketScore += 5;
+                        }
+
+                        if (w.isColorCompatible(jacket, i2)) {
+                            jacketScore += 5;
+                        }
+                        if (w.isTextureCompatible(jacket, i2)) {
+                            jacketScore += 5;
+                        }
+                        
+                        //Take into account colorPreference
+                        if(!colorPreference.equals("any") && 
+                        jacket.getColor().toLowerCase().contains(colorPreference)) {
+                            jacketScore += 3;
+
+                        }
+
+                        //Keep highest scoring jacket
+                        if (jacketScore > bestJacketScore) {
+                            extraJacket = jacket;
+                            bestJacketScore = jacketScore;
+                        }
+                    }
+                    if (extraJacket != null) {
+                        score += bestJacketScore;
+                    }
+                }
+                  // adding each outfit object (top, bottom, and outfit score)
+                // to the master list of all outfit combinations
+                allPossibilities.add(new OutfitOption(i1, i2, extraJacket, score));
+                }
         }
 
         // we sort the list of all outfit objects/possibilites from highest
@@ -178,7 +246,7 @@ public class UserInput {
                 // will place outfit 1 after outfit 2 in the sorted
                 // array (opposite if the result is positive, and leaves
                 // items in their order if result is 0/the scores are equal)
-                return o2.score - o1.score;
+                return Integer.compare(o2.score, o1.score);
             }
         });
 
@@ -186,20 +254,37 @@ public class UserInput {
             System.out.println("No items found to generate suggestions.");
         } else {
             System.out.println("\n--- TOP 3 RANKED SUGGESTIONS ---");
+
             // if are less than 3 options, justs shows how many actually exist
             int count = Math.min(3, allPossibilities.size());
+
             for (int i = 0; i < count; i++) {
                 OutfitOption opt = allPossibilities.get(i);
-                System.out.println((i + 1) + ": " + opt.item1.getName() + " (" + opt.item1.getColor() + ") + "
-                        + opt.item2.getName() + " (" + opt.item2.getColor() + ")");
+
+                String outfitText = opt.item1.getName() + " (" + opt.item1.getColor() + ") + "
+                    + opt.item2.getName() + " (" + opt.item2.getColor() + ")";
+
+                if (opt.jacket != null) {
+                     outfitText += " + " + opt.jacket.getName() + " (" + opt.jacket.getColor() + ")";
+                }
+
+                System.out.println((i + 1) + ": " + outfitText);
             }
 
             System.out.print("\nPick an outfit (1-3) or 0 to skip: ");
             try {
                 int pick = Integer.parseInt(reader.nextLine());
+
                 if (pick > 0 && pick <= count) {
-                    w.markItemAsWorn(allPossibilities.get(pick - 1).item1);
-                    w.markItemAsWorn(allPossibilities.get(pick - 1).item2);
+                    OutfitOption chosen = allPossibilities.get(pick - 1);
+
+                    w.markItemAsWorn(chosen.item1);
+                    w.markItemAsWorn(chosen.item2);
+
+                    if(chosen.jacket != null) {
+                        w.markItemAsWorn(chosen.jacket);
+
+                    }
                     System.out.println(
                             "Your wardrobe has been updated! Items are still in your closer, mark them dirty later if needed.");
                 }
