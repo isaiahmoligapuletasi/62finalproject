@@ -314,13 +314,8 @@ public class Wardrobe implements OutfitSelectorInterface {
     if (dresses == null || dresses.isEmpty()) {
       return null;
     }
-
-    ClothingItem leastWorn = dresses.get(0);
-    for (ClothingItem item : dresses) {
-      if (item.getWearCount() < leastWorn.getWearCount()) {
-        leastWorn = item;
-      }
-    }
-    return leastWorn;
+    return result;
   }
-}
+  
+  
+      
