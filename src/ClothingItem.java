@@ -13,8 +13,8 @@ public class ClothingItem {
     private String style;
 
     //Tracking features
-    private int wearCount;
-    private boolean isDirty;
+   private int wearCount;
+   private boolean isDirty;
 
     /**
      * Constructs a ClothingItem with its needed attributes.
@@ -118,5 +118,9 @@ public class ClothingItem {
      */
     public void markClean() {
         isDirty = false;
+    }
+
+    public void resetWearCount() {
+        wearCount = 0;
     }
 }

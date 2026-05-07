@@ -8,7 +8,7 @@ import java.util.List;
  * Supports clothing storage, outfit generation, 
  * wear tracking, and compatibility checks.
  */
-public interface OutfitSelector{
+public interface OutfitSelectorInterface{
     //Managing clothing options 
 
     public void addClothingItem(ClothingItem item);
@@ -17,10 +17,6 @@ public interface OutfitSelector{
 
     //Retrieves all clothing items stored in system
     public List<ClothingItem> getAllClothingItems();
-
-    //Generated an outfit based on user input like 
-    //"I need something casual for a hot day"
-    public Outfit generateOutfit(String userInput);
 
     //Wear Tracking 
     public void markItemAsWorn(ClothingItem item);
@@ -37,11 +33,5 @@ public interface OutfitSelector{
     //Check whether two clothing items work well together
     public boolean isTextureCompatible(ClothingItem item1, ClothingItem item2);
     public boolean isColorCompatible(ClothingItem item1, ClothingItem item2);
-
-    //Convert natural language input into usable keyword for filtering
-    public List<String> parseUserInput(String input);
-
-    //Returns the top B most worn items
-    public List<ClothingItem> getMostWornItems(int topB);
 
 }
