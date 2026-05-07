@@ -33,7 +33,7 @@ public class DataParser2 {
                 String[] values = line.split(",");
 
                 // just to ensure all data maps to correct place
-                if (values.length >= 5) {
+                if (values.length >= 6) {
                     String name = values[0].trim();
                     String color = values[1].trim();
                     String texture = values[2].trim();
