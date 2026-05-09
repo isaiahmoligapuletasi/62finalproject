@@ -1,22 +1,24 @@
-Clothing ,Color,Texture,Wear Count,Style,Top/Bottom
-Tee,Black,Cotton,0,Casual,Tops
-Dress Shirt,Blue/White,Polyester,0,Formal,Tops
-Long Sleeve,Burgandy,Cotton,0,Casual,Tops
-Sparkly top,Black,Polyester,0,Casual,Tops
-Oxford shirt,Navy,Silk,0,Formal,Tops
-Henley ,Hot Pink,Spandex,0,Casual,Tops
-Workout top,Blue/White,Cotton,0,Athletic,Tops
-Off-shoulder top,Turquoise,Silk,0,Casual,Tops
-Blouse,Light Blue,Wool,0,Casual,Tops
-Jeans,Blue,Denim,0,Casual,Bottoms
-Dress Pants,Green,Cotton,0,Formal,Bottoms
-Pajama shorts,Gray,Cotton,0,Loungewear,Bottoms
-Low rise jeans,Black,Denim,0,Casual,Bottoms
-Track Pants,Denim Blue,Spandex,0,Athletic,Bottoms
-Joggers,Plum,Spandex,0,Athletic,Bottoms
-Cargo Pants,Cream,Nylon,0,Casual,Bottoms
-Palazoo pants,Yellow,Cotton,0,Casual,Bottoms
-Leggings,Gray,Silk,0,Athletic,Bottoms
-Wide leg pants,Navy,Cotton,0,Casual,Bottoms
-Sweatshirt,Black/White,Polyester,0,Outerwear,jackets
-Winter puffer,Green,Nylon,0,Outerwear,jackets
+Clothing ,Color,Texture,Wear Count,Style,Top/Bottom,Temperature
+Tee,Black,Cotton,0,Casual,Tops,warm
+Dress Shirt,Blue/White,Polyester,0,Formal,Tops,warm
+Long Sleeve,Burgandy,Cotton,0,Casual,Tops,cold
+Sparkly top,Black,Polyester,0,Casual,Tops,warm
+Oxford shirt,Navy,Silk,0,Formal,Tops,warm
+Henley ,Hot Pink,Spandex,0,Casual,Tops,warm
+Workout top,Blue/White,Cotton,0,Athletic,Tops,warm
+Off-shoulder top,Turquoise,Silk,0,Casual,Tops,warm
+Blouse,Light Blue,Wool,0,Casual,Tops,warm
+Jeans,Blue,Denim,0,Casual,Bottoms,warm
+Dress Pants,Green,Cotton,0,Formal,Bottoms,warm
+Pajama shorts,Gray,Cotton,0,Loungewear,Bottoms,hot
+Low rise jeans,Black,Denim,0,Casual,Bottoms,warm
+Track Pants,Denim Blue,Spandex,0,Athletic,Bottoms,warm
+Joggers,Plum,Spandex,0,Athletic,Bottoms,warm
+Cargo Pants,Cream,Nylon,0,Casual,Bottoms,warm
+Palazoo pants,Yellow,Cotton,0,Casual,Bottoms,warm
+Leggings,Gray,Silk,0,Athletic,Bottoms,warm
+Wide leg pants,Navy,Cotton,0,Casual,Bottoms,warm
+Sweatshirt,Black/White,Polyester,0,Outerwear,jackets,cold
+Winter puffer,Green,Nylon,0,Outerwear,jackets,cold
+Long dress,Blue,Polyestor,0,Casual,dresses,warm
+Dress,Black,Cotton,0,Formal,dresses,warm
