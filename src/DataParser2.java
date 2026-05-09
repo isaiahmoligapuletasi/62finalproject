@@ -9,11 +9,7 @@ public class DataParser2 {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // skip first line of CSV
             boolean isHeader = true;
-
-            // test comment
-            System.out.println("Reading file: " + filePath);
 
             while ((line = br.readLine()) != null) {
                 // for the first time the loop runs, skip the first line of data ("Clothing",
@@ -25,23 +21,22 @@ public class DataParser2 {
                 }
 
                 if (isHeader) {
-                    // test comment
-                    System.out.println("Skipping header: " + line);
                     isHeader = false;
                     continue;
                 }
                 String[] values = line.split(",");
 
                 // just to ensure all data maps to correct place
-                if (values.length >= 6) {
+                if (values.length >= 7) {
                     String name = values[0].trim();
                     String color = values[1].trim();
                     String texture = values[2].trim();
                     // skipping wearCount (constructor sets it to 0 automatically)
                     String style = values[4].trim();
                     String category = values[5].trim();
+                    String temperature = values[6].trim();
 
-                    ClothingItem item = new ClothingItem(name, category, color, texture, style);
+                    ClothingItem item = new ClothingItem(name, category, color, texture, style, temperature);
                     myWardrobe.addClothingItem(item);
                 }
             }
