@@ -26,7 +26,7 @@ public class UserInput {
 
     public static void main(String[] args) {
         // loading data into the Wardrobe
-        String path = "data\\62 FINAL_GENERATED DATA WITH TEMPS.csv"; 
+        String path = "data/62 FINAL_GENERATED DATA WITH TEMPS.csv";
         Wardrobe myCloset = DataParser2.loadWardrobe(path);
         Scanner reader = new Scanner(System.in);
 
@@ -49,7 +49,7 @@ public class UserInput {
             System.out.println("2. View Laundry Hamper");
             System.out.println("3. Mark an Item as Dirty (Move to Hamper)");
             System.out.println("4. Wash an Item (Move to Wardrobe)");
-            System.out.println("5. Veiw Most/Least Worn Items");
+            System.out.println("5. View Most/Least Worn Items");
             System.out.println("6. Exit");
             System.out.println("Select an option (1-6): ");
 
@@ -297,7 +297,7 @@ public class UserInput {
 
                     }
                     System.out.println(
-                            "Your wardrobe has been updated! Items are still in your closer, mark them dirty later if needed.");
+                            "Your wardrobe has been updated! Items are still in your closet, mark them dirty later if needed.");
                 }
             } catch (Exception e) {
                 System.out.println("Invalid selection.");
