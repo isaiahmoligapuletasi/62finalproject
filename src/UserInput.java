@@ -123,7 +123,7 @@ public class UserInput {
             list1 = w.getTops();
             list2 = w.getBottoms();
 
-            System.out.println("\nWould you like a jacket? ");
+            System.out.println("\nWould you like a jacket? (yes/no)");
             String jacketPreference = reader.nextLine().toLowerCase();
 
             while(!jacketPreference.equals("yes") && !jacketPreference.equals("no")) {
