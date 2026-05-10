@@ -194,7 +194,7 @@ public class UserInput {
                     }
                 }
 
-                // Optional Jacket, start with no jacket selected
+                // Optional jacket, start with no jacket selected
                 ClothingItem extraJacket = null;
 
                 // If the user says they want a jacket then run
@@ -225,7 +225,7 @@ public class UserInput {
 
                         // Take into account colorPreference
                         if (!colorPreference.equals("any") &&
-                                jacket.getColor().toLowerCase().contains(colorPreference)) {
+                            jacket.getColor().toLowerCase().contains(colorPreference)) {
                             jacketScore += 3;
 
                         }

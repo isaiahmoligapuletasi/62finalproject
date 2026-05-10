@@ -1,6 +1,11 @@
+//{
+   // "java.project.referencedLibraries": [
+   //     "lib/**/*.jar",
+  //      "/Users/lewhatkahsay/Downloads/gson-2.10.1.jar"
+  //  ]
+//}
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "/Users/lewhatkahsay/Downloads/gson-2.10.1.jar"
-    ]
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar"
+  ]
 }
