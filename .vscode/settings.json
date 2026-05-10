@@ -1,5 +1,11 @@
 {
-  "java.project.referencedLibraries": [
-    "lib/**/*.jar"
-  ]
+  "java.project.referencedLibraries": {
+    "include": [
+      "lib/**/*.jar",
+      "c:\\Users\\josel\\Downloads\\gson-2.10.1.jar"
+    ],
+    "exclude": [
+      "lib/gson-2.13.1.jar"
+    ]
+  }
 }
