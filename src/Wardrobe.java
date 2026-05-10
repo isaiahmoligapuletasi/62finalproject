@@ -53,7 +53,6 @@ public class Wardrobe implements OutfitSelectorInterface {
     if (item.isDirty()) {
       laundryHamper.add(item);
     } else {
-      String category = item.getCategory().toLowerCase();
 
       String type = item.getCategory().toLowerCase();
       String name = item.getName().toLowerCase();
@@ -67,11 +66,11 @@ public class Wardrobe implements OutfitSelectorInterface {
           || name.contains("leggings") || name.contains("skirt") || name.contains("jeans")
           || name.contains("overalls")) {
         bottoms.add(item);
+
       } else if (type.contains("tops") || name.contains("shirt") || name.contains("tank") || name.contains("tee")
           || name.contains("top")) {
         tops.add(item);
-        // are overalls pants or a dress? - we would want a shirt so i assume pants but
-        // ive left it here for now
+
       } else if (type.contains("dress") || name.contains("jumpsuit") || name.contains("robe")) {
         dresses.add(item);
       }
@@ -189,7 +188,7 @@ public class Wardrobe implements OutfitSelectorInterface {
       return true;
     }
 
-    // earth tones? -idk i just asked claude what color groups we had
+    // earth tones
     // also just other colors that can go together
     String earthTones = "olive burgundy rust brown forest green maroon mustard sage";
     if (earthTones.contains(c1) && earthTones.contains(c2)) {

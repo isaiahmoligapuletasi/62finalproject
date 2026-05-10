@@ -26,7 +26,7 @@ public class UserInput {
 
     public static void main(String[] args) {
         // loading data into the Wardrobe
-        String path = "data/Testing_DataSet.csv";
+        String path = "data\\62 FINAL_GENERATED DATA WITH TEMPS.csv"; 
         Wardrobe myCloset = DataParser2.loadWardrobe(path);
         Scanner reader = new Scanner(System.in);
 
