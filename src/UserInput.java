@@ -12,8 +12,8 @@ public class UserInput {
         ClothingItem item1;
         ClothingItem item2;
 
-        //optional jacket
-        ClothingItem jacket; 
+        // optional jacket
+        ClothingItem jacket;
         int score;
 
         OutfitOption(ClothingItem i1, ClothingItem i2, ClothingItem jacket, int s) {
@@ -29,18 +29,21 @@ public class UserInput {
         String path = "data/Testing_DataSet.csv";
         Wardrobe myCloset = DataParser2.loadWardrobe(path);
         Scanner reader = new Scanner(System.in);
-        boolean running = true;
 
-        System.out.println("============ VIRTUAL OUTFIT SELECTOR ============");
-        // check all items loaded correctly
-        System.out.println("Loaded " + myCloset.getAllClothingItems().size() + " items from the dataset.");
+        System.out.println("\n============ VIRTUAL OUTFIT SELECTOR ============");
+
+        System.out.print("Enter your name: ");
+        String userName = reader.nextLine();
+
+        String currentTemp = WeatherService.getCurrentTemperature();
 
         // the main loop the keeps the program running until user exits
+        boolean running = true;
         while (running) {
             // Display menu options
             System.out.println("\n\n==========================================");
-            // TODO: cutomize to user's name
-            System.out.println("            WARDROBE");
+            System.out.println("            " + userName.toUpperCase() + "'S WARDROBE");
+            System.out.println("\n           CURRENT WEATHER: " + currentTemp.toUpperCase());
             System.out.println("==========================================");
             System.out.println("1. Generate Outfit Suggestions (Top 3)");
             System.out.println("2. View Laundry Hamper");
@@ -54,7 +57,7 @@ public class UserInput {
 
             // connecting the user's choice to the correct helper method
             if (choice.equals("1")) {
-                completeOutfitGeneration(myCloset, reader);
+                completeOutfitGeneration(myCloset, reader, currentTemp);
             } else if (choice.equals("2")) {
                 displayHamper(myCloset);
             } else if (choice.equals("3")) {
@@ -73,7 +76,7 @@ public class UserInput {
         reader.close();
     }
 
-    private static void completeOutfitGeneration(Wardrobe w, Scanner reader) {
+    private static void completeOutfitGeneration(Wardrobe w, Scanner reader, String weather) {
         System.out.println("\n===== OUTIFIT PREFERENCES=====");
 
         // gathering the users preferences (type, style, and color)
@@ -118,7 +121,7 @@ public class UserInput {
         ArrayList<ClothingItem> list1;
         ArrayList<ClothingItem> list2;
 
-        // Type + Bottom 
+        // Type + Bottom
         if (typePreference.equals("a")) {
             list1 = w.getTops();
             list2 = w.getBottoms();
@@ -126,14 +129,14 @@ public class UserInput {
             System.out.println("\nWould you like a jacket? (yes/no)");
             String jacketPreference = reader.nextLine().toLowerCase();
 
-            while(!jacketPreference.equals("yes") && !jacketPreference.equals("no")) {
+            while (!jacketPreference.equals("yes") && !jacketPreference.equals("no")) {
                 System.out.println("Please enter yes or no: ");
                 jacketPreference = reader.nextLine().toLowerCase();
             }
 
             wantJacket = jacketPreference.equals("yes");
         } else {
-            //Dress + Jacket
+            // Dress + Jacket
             list1 = w.getJackets();
             list2 = w.getDresses();
         }
@@ -146,6 +149,15 @@ public class UserInput {
         for (ClothingItem i1 : list1) {
             for (ClothingItem i2 : list2) {
                 int score = 0;
+
+                // NEW PART: im giving weather the most number of points
+                // to simulate it being the highest priority
+                if (i1.getTemperature().equals(weather)) {
+                    score += 20;
+                }
+                if (i2.getTemperature().equals(weather)) {
+                    score += 20;
+                }
 
                 // if each item in the outfit matches the user style
                 // preference, we award the outfit 10 points per match
@@ -182,18 +194,17 @@ public class UserInput {
                     }
                 }
 
-                //Optional Jacket, start with no jacket selected
+                // Optional Jacket, start with no jacket selected
                 ClothingItem extraJacket = null;
 
-                //If the user says they want a jacket then run
+                // If the user says they want a jacket then run
                 if (typePreference.equals("a") && wantJacket) {
                     int bestJacketScore = Integer.MIN_VALUE;
-
 
                     for (ClothingItem jacket : w.getJackets()) {
                         int jacketScore = 0;
 
-                        //style
+                        // style
                         if (jacket.getStyle().toLowerCase().equals(stylePreference)) {
                             jacketScore += 10;
                         }
@@ -211,15 +222,15 @@ public class UserInput {
                         if (w.isTextureCompatible(jacket, i2)) {
                             jacketScore += 5;
                         }
-                        
-                        //Take into account colorPreference
-                        if(!colorPreference.equals("any") && 
-                        jacket.getColor().toLowerCase().contains(colorPreference)) {
+
+                        // Take into account colorPreference
+                        if (!colorPreference.equals("any") &&
+                                jacket.getColor().toLowerCase().contains(colorPreference)) {
                             jacketScore += 3;
 
                         }
 
-                        //Keep highest scoring jacket
+                        // Keep highest scoring jacket
                         if (jacketScore > bestJacketScore) {
                             extraJacket = jacket;
                             bestJacketScore = jacketScore;
@@ -229,10 +240,10 @@ public class UserInput {
                         score += bestJacketScore;
                     }
                 }
-                  // adding each outfit object (top, bottom, and outfit score)
+                // adding each outfit object (top, bottom, and outfit score)
                 // to the master list of all outfit combinations
                 allPossibilities.add(new OutfitOption(i1, i2, extraJacket, score));
-                }
+            }
         }
 
         // we sort the list of all outfit objects/possibilites from highest
@@ -262,10 +273,10 @@ public class UserInput {
                 OutfitOption opt = allPossibilities.get(i);
 
                 String outfitText = opt.item1.getName() + " (" + opt.item1.getColor() + ") + "
-                    + opt.item2.getName() + " (" + opt.item2.getColor() + ")";
+                        + opt.item2.getName() + " (" + opt.item2.getColor() + ")";
 
                 if (opt.jacket != null) {
-                     outfitText += " + " + opt.jacket.getName() + " (" + opt.jacket.getColor() + ")";
+                    outfitText += " + " + opt.jacket.getName() + " (" + opt.jacket.getColor() + ")";
                 }
 
                 System.out.println((i + 1) + ": " + outfitText);
@@ -281,7 +292,7 @@ public class UserInput {
                     w.markItemAsWorn(chosen.item1);
                     w.markItemAsWorn(chosen.item2);
 
-                    if(chosen.jacket != null) {
+                    if (chosen.jacket != null) {
                         w.markItemAsWorn(chosen.jacket);
 
                     }

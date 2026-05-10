@@ -59,20 +59,20 @@ public class Wardrobe implements OutfitSelectorInterface {
       String name = item.getName().toLowerCase();
 
       // changed .equals() to .contains() in case file has extra spaces/capitalization
-      if (type.contains("jacket") || name.contains("puffer") || name.contains("vest") 
+      if (type.contains("jacket") || name.contains("puffer") || name.contains("vest")
           || name.contains("coat") || name.contains("hoodie") || name.contains("sweatshirt")) {
-          jackets.add(item);
+        jackets.add(item);
 
       } else if (type.contains("bottoms") || name.contains("shorts") || name.contains("pants")
-          || name.contains("leggings") || name.contains("skirt") || name.contains("jeans")) {
+          || name.contains("leggings") || name.contains("skirt") || name.contains("jeans")
+          || name.contains("overalls")) {
         bottoms.add(item);
       } else if (type.contains("tops") || name.contains("shirt") || name.contains("tank") || name.contains("tee")
           || name.contains("top")) {
-            tops.add(item);
+        tops.add(item);
         // are overalls pants or a dress? - we would want a shirt so i assume pants but
         // ive left it here for now
-      } else if (type.contains("dress") || name.contains("jumpsuit") || name.contains("overalls")
-          || name.contains("robe")) {
+      } else if (type.contains("dress") || name.contains("jumpsuit") || name.contains("robe")) {
         dresses.add(item);
       }
     }
@@ -314,9 +314,13 @@ public class Wardrobe implements OutfitSelectorInterface {
     if (dresses == null || dresses.isEmpty()) {
       return null;
     }
-    return result;
+
+    ClothingItem leastWorn = dresses.get(0);
+    for (ClothingItem item : dresses) {
+      if (item.getWearCount() < leastWorn.getWearCount()) {
+        leastWorn = item;
+      }
+    }
+    return leastWorn;
   }
 }
-  
-  
-      

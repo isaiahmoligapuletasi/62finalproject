@@ -1,43 +1,57 @@
 public class ClothingItem {
-    //Label of the item like "Long Sleeve"
+    // Label of the item like "Long Sleeve"
     private String name;
 
-    //Labels like "Top" or "Bottom"
-    private String category; 
+    // Labels like "Top" or "Bottom"
+    private String category;
 
     private String color;
-    //Labels like "Cotton", "Denim", etc
+    // Labels like "Cotton", "Denim", etc
     private String texture;
 
-    //Labels like "Casual", "Athletic wear"
+    // Labels like "Casual", "Athletic wear"
     private String style;
 
-    //Tracking features
-   private int wearCount;
-   private boolean isDirty;
+    // Labels like "warm", "cold", "hot"
+    private String temperature;
+
+    // Tracking features
+    private int wearCount;
+    private boolean isDirty;
 
     /**
      * Constructs a ClothingItem with its needed attributes.
-     * Marks our clothing items as clean as the default and 
+     * Marks our clothing items as clean as the default and
      * wear count to 0
-     * @param name 
+     * 
+     * @param name
      * @param category
      * @param color
      * @param texture
      * @param style
      */
-    public ClothingItem(String name, String category, String color, String texture, String style) {
+    public ClothingItem(String name, String category, String color, String texture, String style, String temperature) {
         this.name = name;
         this.category = category;
         this.color = color;
         this.texture = texture;
         this.style = style;
+        this.temperature = temperature;
 
         this.wearCount = 0;
         this.isDirty = false;
     }
 
-    //Getter methods
+    // Getter methods
+
+    /**
+     * Returns the temperature associated with the item
+     * 
+     * @return the temperature
+     */
+    public String getTemperature() {
+        return temperature;
+    }
 
     /**
      * Returns the name of the clothing item
@@ -50,6 +64,7 @@ public class ClothingItem {
 
     /**
      * Returns the category of the item
+     * 
      * @return category of item
      */
     public String getCategory() {
@@ -58,6 +73,7 @@ public class ClothingItem {
 
     /**
      * Returns the color of the item
+     * 
      * @return color of item
      */
     public String getColor() {
@@ -66,6 +82,7 @@ public class ClothingItem {
 
     /**
      * Returns the texture of the item
+     * 
      * @return texture of item
      */
     public String getTexture() {
@@ -74,6 +91,7 @@ public class ClothingItem {
 
     /**
      * Returns the style of the item
+     * 
      * @return style of item
      */
     public String getStyle() {
@@ -82,6 +100,7 @@ public class ClothingItem {
 
     /**
      * Returns the wear count of the item
+     * 
      * @return wear count of item
      */
     public int getWearCount() {
@@ -89,20 +108,21 @@ public class ClothingItem {
     }
 
     /**
-     * Returns a boolean. True if the item is dirty and 
+     * Returns a boolean. True if the item is dirty and
      * false otherwise.
+     * 
      * @return false or true based on if ths item is dirty
      */
     public boolean isDirty() {
         return isDirty;
     }
 
-    //State update methods
+    // State update methods
 
     /**
      * Marks the item as worn once and increments wear count
      */
-    public void markWorn(){
+    public void markWorn() {
         wearCount++;
     }
 
