@@ -1,3 +1,13 @@
+/**
+ * ClothingItem represents a single clothing item stored in the wardrobe.
+ * 
+ * Each ClothingItem stores information about the item such as name, category,
+ * color, texture, style, and the best temperature for item.
+ * 
+ * @author Isaiah Moliga-Puletasi
+ * @author Lewhat Kahsay
+ * @author Joselyn Quinteros
+ */
 public class ClothingItem {
     // Label of the item like "Long Sleeve"
     private String name;
