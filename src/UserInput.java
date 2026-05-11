@@ -318,28 +318,62 @@ public class UserInput {
         }
     }
 
-    // searches all items for a name match and moves it to the laundry hamper
-    private static void completeMarkDirty(Wardrobe w, Scanner reader) {
-        System.out.print("Enter the name of the item that is dirty: ");
-        String nameInput = reader.nextLine().toLowerCase();
+   private static void completeMarkDirty(Wardrobe w, Scanner reader) {
+    System.out.println("\n--- MARK ITEM AS DIRTY ---");
+    System.out.print("Enter part of the item name (example: 'halter', 'jeans'): ");
+    String nameInput = reader.nextLine().toLowerCase();
 
-        boolean found = false;
-        for (ClothingItem i : w.getAllClothingItems()) {
-            // .contains() in case the user input isn't an exact match
-            if (i.getName().toLowerCase().contains(nameInput) && !i.isDirty()) {
-                w.markItemDirty(i);
-                System.out.println("Found it! '" + i.getName() + "' moved to laundry.");
-                found = true;
-                // stop searching after we find the first match (not sure if we want to do this
-                // another way)
-                break;
-            }
-        }
+    ArrayList<ClothingItem> matches = new ArrayList<>();
 
-        if (!found) {
-            System.out.println("Could not find a clean item matching '" + nameInput + "'.");
+    // find all matching clean items
+    for (ClothingItem i : w.getAllClothingItems()) {
+        if (!i.isDirty() &&
+            i.getName().toLowerCase().contains(nameInput)) {
+            matches.add(i);
         }
     }
+
+    // no matches
+    if (matches.isEmpty()) {
+        System.out.println("No clean items found matching '" + nameInput + "'.");
+        return;
+    }
+
+    // one match → auto-select
+    if (matches.size() == 1) {
+        ClothingItem item = matches.get(0);
+        w.markItemDirty(item);
+        System.out.println("Found it! '" + item.getName() + "' moved to laundry.");
+        return;
+    }
+
+    // multiple matches → user chooses
+    System.out.println("\nMultiple items found. Please choose:");
+
+    for (int j = 0; j < matches.size(); j++) {
+        ClothingItem item = matches.get(j);
+        System.out.println((j + 1) + ": " + item.getName() + " (" + item.getColor() + ")");
+    }
+
+    System.out.print("Enter the number of the item: ");
+
+    try {
+        int choice = Integer.parseInt(reader.nextLine());
+
+        if (choice < 1 || choice > matches.size()) {
+            System.out.println("Invalid selection.");
+            return;
+        }
+
+        ClothingItem selected = matches.get(choice - 1);
+        w.markItemDirty(selected);
+
+        System.out.println("Found it! '" + selected.getName() + "' moved to laundry.");
+
+    } catch (Exception e) {
+        System.out.println("Invalid input. Please enter a number.");
+    }
+}
 
     // finds an item in the laundry hamper and moves it back to its respective
     // category list
