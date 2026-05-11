@@ -7,6 +7,10 @@ import java.util.List;
  * 
  * Supports clothing storage, outfit generation, 
  * wear tracking, and compatibility checks.
+ * 
+ * @author Joselyn Quinteros
+ * @author Isaiah Moliga-Puletasi
+ * @author Lewhat Kahsay
  */
 public interface OutfitSelectorInterface{
     //Managing clothing options 
