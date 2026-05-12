@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * UserInput is the main class for the Outfit Selector
+ * UserInput is the main class for the Outfit Generator
  * 
  * This class handles all our user interations through the
  * console menu system. This includes: generating outfits suggestions, 
@@ -73,7 +73,7 @@ public class UserInput {
         Wardrobe myCloset = DataParser2.loadWardrobe(path);
         Scanner reader = new Scanner(System.in);
 
-        System.out.println("\n============ VIRTUAL OUTFIT SELECTOR ============");
+        System.out.println("\n============ VIRTUAL OUTFIT GENERATION ============");
 
         System.out.print("Enter your name: ");
         String userName = reader.nextLine();

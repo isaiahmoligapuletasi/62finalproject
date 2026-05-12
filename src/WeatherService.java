@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 /**
- * WeatherService retrieves current weather deata from an external API 
+ * WeatherService retrieves current weather data from an external API 
  * and converts it into a temperature category for the outfit selector.
  * This class maps the real-time temperature data and maps it to cold, 
  * warm, or hot. 

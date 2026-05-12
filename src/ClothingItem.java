@@ -144,7 +144,7 @@ public class ClothingItem {
     }
 
     /**
-     * Marks the item as clean which makes it avaliable to wearagain
+     * Marks the item as clean which makes it avaliable to wear again
      */
     public void markClean() {
         isDirty = false;

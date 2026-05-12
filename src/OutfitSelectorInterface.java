@@ -3,7 +3,7 @@ import java.util.List;
 /**
  * Outfit Selector Interface
  * 
- * Includes the core functionality for an outfit selector system.
+ * Includes the core functionality for an outfit generating system.
  * 
  * Supports clothing storage, outfit generation, 
  * wear tracking, and compatibility checks.

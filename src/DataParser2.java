@@ -6,7 +6,7 @@ import java.util.List;
  * DataParser2 reads clothing data from a CSV file and loads the 
  * clothing items into a Wardrobe object.
  * This class is responsible for reading clothing data files, 
- * creasting clothing item objects, and adding items into the 
+ * creating clothing item objects, and adding items into the 
  * correct wardrobe categories. 
  * 
  * @author Lewhat Kahsay
