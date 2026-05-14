@@ -33,7 +33,7 @@ Each `ClothingItem` information is stored within private instance variables with
 
 The ClothingItem class consists of getter/setter methods, `get[Clothing Information Type]`, for: temperature, name, category, color, texture, style, and wearCount. 
 
-Additionally, the class consists of various other methods as well. `isDirty` checks if a clothing item is dirty and returns true if a clothing item is marked as dirty, false otherwise. `markWorn` increments the `wearCount` of a clothing item by 1 (demarcating that a clothing item has been worn once). `markClean` cleans” a piece of clothing by setting isDirty = false. `resetWearCount` sets the `wearCount` =  0 (which coincides with its dirtiness: for our project purposes, we say a clothing item that’s no longer dirty has not been worn, and thus we reset it’s wear count). 
+Additionally, the class consists of various other methods as well. `isDirty` checks if a clothing item is dirty and returns true if a clothing item is marked as dirty, false otherwise. `markWorn` increments the `wearCount` of a clothing item by 1 (demarcating that a clothing item has been worn once). `markClean` "cleans” a piece of clothing by setting isDirty = false. `resetWearCount` sets the `wearCount` =  0 (which coincides with its dirtiness: for our project purposes, we say a clothing item that’s no longer dirty has not been worn, and thus we reset it’s wear count). 
 
 (* All methods in `ClothingItem` require no user input, aside from the constructor).
 
