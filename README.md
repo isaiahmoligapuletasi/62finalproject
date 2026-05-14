@@ -9,7 +9,7 @@ The system organizes clothing items, tracks laundry status, and ranks outfit com
 ## Features:
 1. Outfit recommendation based on texture, color, style, and weather
 2. Laundry hamper that keeps track of dirty clothing items 
-3. Least-worn and most-worn counts to identify favorite/least favorite pieces
+3. Least-worn and most-worn counts to identify least/most worn pieces
 4. Live weather integration using an external weather API 
 
 ## For Users: How to Run the Program
